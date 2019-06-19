@@ -80,19 +80,19 @@ extension MessagePackValue: Equatable {
 }
 
 extension MessagePackValue: Hashable {
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         switch self {
-        case .nil: return 0
-        case .bool(let value): return value.hashValue
-        case .int(let value): return value.hashValue
-        case .uint(let value): return value.hashValue
-        case .float(let value): return value.hashValue
-        case .double(let value): return value.hashValue
-        case .string(let string): return string.hashValue
-        case .binary(let data): return data.count
-        case .array(let array): return array.count
-        case .map(let dict): return dict.count
-        case .extended(let type, let data): return 31 &* type.hashValue &+ data.count
+        case .nil: return hasher.combine(0)
+        case .bool(let value): return hasher.combine(value)
+        case .int(let value): return hasher.combine(value)
+        case .uint(let value): return hasher.combine(value)
+        case .float(let value): return hasher.combine(value)
+        case .double(let value): return hasher.combine(value)
+        case .string(let string): return hasher.combine(string)
+        case .binary(let data): return hasher.combine(data.count)
+        case .array(let array): return hasher.combine(array.count)
+        case .map(let dict): return hasher.combine(dict.count)
+        case .extended(let type, let data): return hasher.combine(31 &* type.hashValue &+ data.count)
         }
     }
 }
